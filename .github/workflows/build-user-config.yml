@@ -50,7 +50,36 @@ jobs:
     name: Build
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.matrix.outputs.build_matrix) }}
+      matrix: ${{ fromJson('{
+  "include": [
+    {
+      "board": "nice_nano_v2",
+      "shield": "pipar_flake_left",
+      "config": {
+        "id": "pipar_flake",
+        "vendor": "YourVendor",
+        "website": "https://github.com/your_repo",
+        "features": {
+          "bluetooth": true,
+          "encoder": true
+        }
+      }
+    },
+    {
+      "board": "nice_nano_v2",
+      "shield": "pipar_flake_right",
+      "config": {
+        "id": "pipar_flake",
+        "vendor": "YourVendor",
+        "website": "https://github.com/your_repo",
+        "features": {
+          "bluetooth": true,
+          "encoder": false
+        }
+      }
+    }
+  ]
+}') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
